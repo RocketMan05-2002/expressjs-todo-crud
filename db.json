@@ -1,6 +1,1 @@
-{
-  "todos": [
-    { "id": 3, "name": "Learn Postman", "status": false },
-    { "id": 4, "name": "Learn Jira", "status": false }
-  ]
-}
+{ "todos": [{ "id": 3, "name": "Learn Postman", "status": false }] }
