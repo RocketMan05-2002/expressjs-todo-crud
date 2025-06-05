@@ -10,7 +10,7 @@ const express = require("express");
 const app = express();
 //3.  we need to inform Express that JSON is coming from body.
 // either from Postman or frontend
-app.use(express.json());
+app.use(express.json()); // body parser that senses json being sent
 
 // 1. app.get("/todos",(req,res)=>{
 //     // i will read db.json file and give all available todos as response
