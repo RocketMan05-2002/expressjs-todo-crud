@@ -27,19 +27,6 @@ app.get("/todos",(req,res)=>{
     let todos = data.todos;
     res.send({msg:"List of Todos",todos});
 })
-
-//3. add todo
-app.post("/add-todo",(req,res)=>{
-    let newTodo = req.body;
-    let data = JSON.parse(fs.readFileSync("./db.json","utf-8"));;
-    let todos = data.todos;
-    todos.push(newTodo);
-    console.log(data);
-    console.log(todos);
-    fs.writeFileSync("./db.json",JSON.stringify(data));
-    res.send("Todo added");
-})
-
 // o/p
 /* 
 {
@@ -59,6 +46,19 @@ app.post("/add-todo",(req,res)=>{
 }
 */
 
+//3. add todo
+app.post("/add-todo",(req,res)=>{
+    let newTodo = req.body;
+    let data = JSON.parse(fs.readFileSync("./db.json","utf-8"));;
+    let todos = data.todos;
+    todos.push(newTodo);
+    console.log(data);
+    console.log(todos);
+    fs.writeFileSync("./db.json",JSON.stringify(data));
+    res.send("Todo added");
+})
+
+// 4. delete todo
 app.delete("/delete-todo/:id",(req,res)=>{
     // console.log(req.params);
     let id = req.params.id;
@@ -78,6 +78,50 @@ app.delete("/delete-todo/:id",(req,res)=>{
     }
 })
 // apparently === and !== wont work here, we gotta stick ton == and !=
+
+// update todo
+app.put("/update-todo/:id",(req,res)=>{
+    //:id is a path parameter
+    // params is a key value pair in req object
+    let id = req.params.id;
+    let data = JSON.parse(fs.readFileSync("./db.json","utf-8"));
+    let todos = data.todos;
+    let index = todos.findIndex((el)=>el.id == id);
+
+    if(index == -1){
+        res.send("todo not found");
+    }else{
+        //todo found
+        let updatedTodos = todos.map((el,i)=>{
+            if(el.id == id){
+                return {...el,...req.body};
+            }else{
+                return el;
+            }
+        })
+        data.todos = updatedTodos;
+        fs.writeFileSync("./db.json",JSON.stringify(data));
+        res.send("todo updated");
+    }
+})
+
+// get todo by Id
+app.get("/todo/:id",(req,res)=>{
+    let id = req.params.id;
+    let data = JSON.parse(fs.readFileSync("./db.json","utf-8"));
+    let todos = data.todos;
+    let index = todos.findIndex((el)=>el.id == id);
+
+    if(index == -1){
+        res.send("todo not found");
+    }else{
+        todos.forEach((el)=>{
+            if(el.id == id){
+                res.send({todo:el});
+            }
+        })
+    }
+})
 
 app.listen(8000,()=>{
     console.log("Server started through port 8000");
