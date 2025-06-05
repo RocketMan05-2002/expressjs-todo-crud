@@ -1,14 +1,6 @@
 {
-    "todos":[
-        {
-            "id":1,
-            "name":"Learn NEM",
-            "status": false
-        },
-        {
-            "id":2,
-            "name":"Learn Express",
-            "status":false
-        }
-    ]
+  "todos": [
+    { "id": 3, "name": "Learn Postman", "status": false },
+    { "id": 4, "name": "Learn Jira", "status": false }
+  ]
 }
