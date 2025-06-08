@@ -1,23 +1,23 @@
 const express = require("express");
-const fs = require("fs");
+const {getTodoData, addOrUpdateTodos} = require("../models/todo.model");
 
 const todoRouter = express.Router();
 
 // 1. read todos
 todoRouter.get("/get-todos", (req, res) => {
-  let data = JSON.parse(fs.readFileSync("./db.json", "utf-8"));
-  let todos = data.todos;
-  res.status(200).send({ msg: "lost of todos", todos });
+  let todos = getTodoData().todos;
+  res.send({ msg: "lost of todos", todos });
 });
 
 // 2. add a todo
 todoRouter.post("/add-todo", (req, res) => {
   // console.log(req.body);
   let newTodo = req.body;
-  let data = JSON.parse(fs.readFileSync("./db.json", "utf-8"));
+  let data = getTodoData().data;
   let todos = data.todos;
-  todos.push(newTodo);
-  fs.writeFileSync("./db.json", JSON.stringify(data));
+  todos.push(newTodo); //heap memory wont work now
+
+  addOrUpdateTodos(data);
   res.send("todo was added");
 });
 
@@ -25,17 +25,17 @@ todoRouter.post("/add-todo", (req, res) => {
 todoRouter.delete("/delete-todo/:id", (req, res) => {
   // console.log(req.params);
   let id = req.params.id;
-  let data = JSON.parse(fs.readFileSync("./db.json", "utf-8"));
+  let data = getTodoData().data;
   let todos = data.todos;
   let index = todos.findIndex((el) => el.id == id);
 
   if (index == -1) {
-    res.status(404).send("todo wasnt found");
+    res.send("todo wasnt found");
   } else {
     //todo was found. filter it out
     let filteredTodos = todos.filter((el) => el.id != id);
     data.todos = filteredTodos;
-    fs.writeFileSync("./db.json", JSON.stringify(data));
+    addOrUpdateTodos(data);
     res.send("todo was deleted");
   }
 });
@@ -43,8 +43,8 @@ todoRouter.delete("/delete-todo/:id", (req, res) => {
 // 4. update a todo
 todoRouter.put("/update-todo/:id", (req, res) => {
   let id = req.params.id;
-  let data = JSON.parse(fs.readFileSync("./db.json", "utf-8"));
-  let todos = data.todos;
+  let data = getTodoData().data;
+  let todos = data.todos; //since we are using heap meomey dont alter this
   let index = todos.findIndex((el) => el.id == id);
 
   if (index == -1) {
@@ -58,7 +58,7 @@ todoRouter.put("/update-todo/:id", (req, res) => {
       }
     });
     data.todos = updatedTodos;
-    fs.writeFileSync("./db.json", JSON.stringify(data));
+    addOrUpdateTodos(data);
     res.send("todo was updated");
   }
 });
@@ -67,8 +67,7 @@ todoRouter.put("/update-todo/:id", (req, res) => {
 todoRouter.get("/todos/:id", (req, res) => {
   // req.params
   let id = req.params.id;
-  let data = JSON.parse(fs.readFileSync("./db.json", "utf-8"));
-  let todos = data.todos;
+  let todos = getTodoData().todos;
   let index = todos.findIndex((el) => el.id == id);
 
   if (index == -1) {
@@ -88,8 +87,7 @@ todoRouter.get("/todos/:id", (req, res) => {
 todoRouter.get("/todo", (req, res) => {
   // console.log(req.query); // {name:"Learn NEM"}
   const { name } = req.query;
-  let data = JSON.parse(fs.readFileSync("./db.json", "utf-8"));
-  let todos = data.todos;
+  let todos = getTodoData().todos;
   if (name) {
     let filteredTodos = todos.filter((el) => {
       if (el.name.includes(name)) {
