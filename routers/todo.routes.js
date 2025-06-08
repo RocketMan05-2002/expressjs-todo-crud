@@ -7,7 +7,7 @@ const todoRouter = express.Router();
 todoRouter.get("/get-todos", (req, res) => {
   let data = JSON.parse(fs.readFileSync("./db.json", "utf-8"));
   let todos = data.todos;
-  res.send({ msg: "lost of todos", todos });
+  res.status(200).send({ msg: "lost of todos", todos });
 });
 
 // 2. add a todo
@@ -30,7 +30,7 @@ todoRouter.delete("/delete-todo/:id", (req, res) => {
   let index = todos.findIndex((el) => el.id == id);
 
   if (index == -1) {
-    res.send("todo wasnt found");
+    res.status(404).send("todo wasnt found");
   } else {
     //todo was found. filter it out
     let filteredTodos = todos.filter((el) => el.id != id);
