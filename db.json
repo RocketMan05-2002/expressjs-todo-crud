@@ -1,8 +1,12 @@
-{ 
-    "todos": [
-        { "id": 1, "name": "Learn NEM", "status": false},
-        { "id": 2, "name": "Learn Express", "status": false},
-        { "id": 3, "name": "Learn Postman again", "status": false },
-        { "id": 4, "name": "Learn Vite", "status": false }
-    ] 
+{
+  "todos": [
+    { "id": 1, "name": "Learn NEM", "status": false },
+    { "id": 2, "name": "Learn Express", "status": false },
+    { "id": 3, "name": "Learn Postman again", "status": false }
+  ],
+  "blogs": [
+    { "id": 1, "name": "need to Learn NEM", "desc": "lorem10" },
+    { "id": 2, "name": "need to Learn Express", "desc": "lorem20" },
+    { "id": 3, "name": "need to Learn Postman", "desc": "lorem30" }
+  ]
 }
