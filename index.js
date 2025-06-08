@@ -61,10 +61,6 @@ app.post("/add-todo",(req,res)=>{
 // 4. delete todo
 app.delete("/delete-todo/:id",(req,res)=>{
     // console.log(req.params);
-    let id = req.params.id;
-    let data = JSON.parse(fs.readFileSync("./db.json","utf-8"));
-    let todos = data.todos;
-    let index = todos.findIndex((el)=>el.id == id);
 
     if(index == -1){
         res.send(`No todo of ${id} was found`);
@@ -122,6 +118,30 @@ app.get("/todo/:id",(req,res)=>{
         })
     }
 })
+
+//6. get todo by query
+app.get("/todos",(req,res)=>{
+    console.log(req.query);
+    let data = JSON.parse(fs.readFileSync("./db.json","utf-8"));
+    let todos = data.todos;
+    const {name} = req.query;
+    if(name){
+        //serach todo by name and send as a response
+        let filteredTodos = todos.filter((el)=>{
+            if(el.name.includes(name)){
+                return el;
+            }
+        });
+        if(filteredTodos.length ==0){
+            res.send("no todos found");
+        }else{
+            res.send({todos: filteredTodos});
+        }
+    }else{
+        res.send({msg:"list of todos",todos});
+    }
+})
+
 
 app.listen(8000,()=>{
     console.log("Server started through port 8000");
