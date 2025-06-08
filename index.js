@@ -19,6 +19,10 @@ app.use("/todos", todoRouter); // any request with endpoint starting with todos,
 app.use("/blogs", blogRouter);// any request with endpoint starting with blogs,
 // it will see /blogs app will send the remaining part to blogRouter
 
+app.use((req,res)=>{
+    res.send("request not found");
+})
+//always added as the last router. critical.
 
 app.listen(8000,()=>{
     console.log("server started at 8000 port");
