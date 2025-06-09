@@ -3,11 +3,25 @@ const { getAllTodos, addTodo, deleteTodoById, updateTodobyId, getTodoById, getTo
 
 const todoRouter = express.Router();
 
+const checkIncomingTodo = (req,res,next) => {
+    const allowedKeys = ["id","name","status"];
+    const keys = Object.keys(req.body);
+
+    const hasOnlyAllowedKeys = keys.every( key => allowedKeys.includes(key));
+    const hasRequiredKeys = allowedKeys.every(key => key in req.body);
+
+    if(!hasOnlyAllowedKeys || !hasRequiredKeys){
+        res.status(400).send("Invalid todo format: only 'name' and 'status' are allowed.");
+    }else{
+        next();
+    }
+}
+
 // 1. read todos
 todoRouter.get("/get-todos", getAllTodos);
 
 // 2. add a todo
-todoRouter.post("/add-todo", addTodo );
+todoRouter.post("/add-todo", checkIncomingTodo , addTodo );
 
 //3. delete a todo
 todoRouter.delete("/delete-todo/:id", deleteTodoById);
