@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllTodos, addTodo, deleteTodoById, updateTodobyId, getTodoById, getTodoByQuery } = require("../controllers/todo.controller");
+const { getAllTodos, addTodo, deleteTodoById, updateTodoById, getTodoById, getTodoByQuery } = require("../controllers/todo.controller");
 
 const todoRouter = express.Router();
 
@@ -27,7 +27,7 @@ todoRouter.post("/add-todo", checkIncomingTodo , addTodo );
 todoRouter.delete("/delete-todo/:id", deleteTodoById);
 
 // 4. update a todo
-todoRouter.put("/update-todo/:id", updateTodobyId );
+todoRouter.put("/update-todo/:id", updateTodoById );
 
 //5. get todo by id
 todoRouter.get("/todos/:id", getTodoById);
