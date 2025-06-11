@@ -1,1 +1,12 @@
-{"todos":[{"id":1,"name":"Learn Nem","status":false},{"id":2,"name":"Learn Node","status":false},{"id":3,"name":"Learn Postman again","status":false}],"blogs":[{"id":1,"name":"need to Learn Nem","desc":"lorem10"},{"id":2,"name":"need to Learn Node","desc":"lorem20"},{"id":3,"name":"need to Learn Express","desc":"lorem30"}]}
+{
+  "todos": [
+    { "id": 1, "name": "Learn Nem", "status": false },
+    { "id": 2, "name": "Learn Node", "status": false },
+    { "id": 3, "name": "Learn Postman again", "status": false }
+  ],
+  "blogs": [
+    { "id": 1, "name": "need to Learn Nem", "desc": "lorem10" },
+    { "id": 2, "name": "need to Learn Node", "desc": "lorem20" },
+    { "id": 3, "name": "need to Learn Express", "desc": "lorem30" }
+  ]
+}
