@@ -8,8 +8,8 @@ const getTodoData = () => {
     return {data,todos};
 }
 
-const addOrUpdateTodos = (data) => {
-    fs.writeFileSync("./db.json", JSON.stringify(data));
+const addOrUpdateTodo = (data) => {
+    fs.writeFileSync("./db.json",JSON.stringify(data));
 }
 
-module.exports = { getTodoData, addOrUpdateTodos };
+module.exports = {getTodoData, addOrUpdateTodo};

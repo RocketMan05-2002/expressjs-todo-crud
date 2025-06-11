@@ -1,29 +1,26 @@
-// blogs - > blog router and this router should be connected to index.js
-// if it is related to blogs index.js will send it to blog.router
-// in express we have a feature called as router
 
-
-const express = require("express");
 const fs = require("fs");
-const todoRouter = require("./routers/todo.routes");
-const blogRouter = require("./routers/blog.routes");
-
+const express= require("express");
+const todoRouter = require("./routers/todo.router");
+const blogRouter = require("./routers/blog.router")
 const app = express();
 app.use(express.json());
 
-// todo routes
-app.use("/todos", todoRouter); // any request with endpoint starting with todos,
-// it will see /todos app will send the remaining part to todoRouter
+//0. test request
+app.get("/test",(req,res)=>{
+    res.send("wepbicI");
+})
 
-//blog routes
-app.use("/blogs", blogRouter);// any request with endpoint starting with blogs,
-// it will see /blogs app will send the remaining part to blogRouter
+//todos
+app.use("/todos", todoRouter);
+
+//blogs
+app.use("/blogs", blogRouter)
 
 app.use((req,res)=>{
-    res.send("request not found");
+    res.status(400).send("request not found");
 })
-//always added as the last router. critical.
 
 app.listen(8000,()=>{
-    console.log("server started at 8000 port");
+    console.log("server started via 8000 port");
 })

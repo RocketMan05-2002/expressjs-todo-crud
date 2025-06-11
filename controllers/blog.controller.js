@@ -1,8 +1,7 @@
-const getBlogData = require("../models/blog.model")
+const getBlogData = require("../models/blog.model");
 
 const getAllBlogs = (req,res)=>{
-    let data = getBlogData().data;
-    let blogs = data.blogs;
+    let blogs = getBlogData().blogs;
     res.send({msg:"list of blogs", blogs});
 };
 
